@@ -9,16 +9,16 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.status(200).send(
        "The quotes REST-api"
-    )
+    );
 });
 app.post("/new", quoteValidation, handleValidationErrors, saveQuote);
 
 
 app.listen(8000, (err) => {
     if (err) {
-        console.error(err)
-        return
+        console.error(err);
+        return;
     }
 
-    console.log("The server is listening on port 8000!")
+    console.log("The server is listening on port 8000!");
 });
