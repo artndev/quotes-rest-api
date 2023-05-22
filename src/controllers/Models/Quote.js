@@ -1,8 +1,14 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 
 export const Quote = model("Quote", new Schema(
     {
+        _id: {
+            type: String,
+            required: false,
+            unique: true,
+            default: new mongoose.Types.ObjectId().toString()
+        },
         author: {
             type: String,
             required: false,
@@ -14,5 +20,8 @@ export const Quote = model("Quote", new Schema(
             unique: true,
         }
     },
-    { collection: "quotes" }
-))
+    { 
+        collection: "quotes", 
+        versionKey: false 
+    }
+));

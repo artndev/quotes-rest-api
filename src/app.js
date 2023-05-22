@@ -1,17 +1,17 @@
 import express from "express";
-import { quoteValidation } from "./validations.js";
-import { saveQuote } from "./controllers/DBController.js";
+import { saveQuoteValidation, idParamValidation } from "./validations.js";
+import { deleteQuote, findQuote, saveQuote } from "./controllers/DBController.js";
 import handleValidationErrors from "./handleValidationErrors.js";
 const app = express();
 app.use(express.json());
 
 
-app.get("/", (req, res) => {
-    res.status(200).send(
-       "The quotes REST-api"
-    );
+app.get("/", (_, res) => {
+    res.status(200).send("The quotes REST-api");
 });
-app.post("/new", quoteValidation, handleValidationErrors, saveQuote);
+app.post("/quotes/new", saveQuoteValidation, handleValidationErrors, saveQuote);
+app.get("/quotes/:id", idParamValidation, handleValidationErrors, findQuote);
+app.delete("/quotes/:id", idParamValidation, handleValidationErrors, deleteQuote)
 
 
 app.listen(8000, (err) => {
