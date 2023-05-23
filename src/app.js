@@ -9,12 +9,10 @@ app.use(express.json());
 
 app.get("/", (_, res) => {
     res.status(200).json({
-        message: "The QUOTES-REST-API. It's very simple but useful! :)",
+        message: "The QUOTES-REST-API service. It's very simple but very useful!",
         description: {
-            createANewQuote: "[POST] /quotes",
-            deleteAQuote: "[DELETE] /quotes/:id",
-            getAQuote: "[GET] /quotes/:id",
-            getARandomQuote: "[GET] /random",
+            getRandomQuote: "[GET] /random",
+            getQuote: "[GET] /quotes/:id"
         }
     });
 });
@@ -23,11 +21,12 @@ app.get("/quotes/:id", idParamValidation, handleValidationErrors, getQuote);
 app.post("/quotes", verifyAuthToken, saveQuoteValidation, handleValidationErrors, saveQuote);
 app.delete("/quotes/:id", verifyAuthToken, idParamValidation, handleValidationErrors, deleteQuote);
 
-app.listen(8000, (err) => {
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, (err) => {
     if (err) {
         console.error(err);
         return;
     }
 
-    console.log("The server is listening on the port / Сервер на порту - 8000!\nhttps://localhost:8000/");
+    console.log(`Сервер на порту - ${PORT}!`);
 });
