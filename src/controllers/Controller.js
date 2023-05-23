@@ -103,7 +103,9 @@ export const getRandomQuote = async (_, res) => {
                 _doc: doc
             });
         else
-            throw new MongooseError;
+            res.status(404).json({ 
+                message: "Не удалось получить случайную цитату." 
+            });
     }
     catch (err) {
         if (err instanceof Error) {
