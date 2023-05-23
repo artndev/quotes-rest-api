@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 
 
-export const Quote = model("Quote", new Schema(
+export default model("Quote", new Schema(
     {
         _id: {
             type: String,
