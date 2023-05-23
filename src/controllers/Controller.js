@@ -11,7 +11,7 @@ export const saveQuote = async (req, res) => {
         const doc = await new Quote({ author: req.body.author, text: req.body.text }).save()
         if (doc)
             res.status(200).json({
-                message: "Цитата сохранена!",
+                message: "Цитата сохранена! / Quote was successfully saved!",
                 _doc: doc
             });
         else
@@ -22,7 +22,7 @@ export const saveQuote = async (req, res) => {
             console.error(err);
 
             res.status(500).json({
-                message: "Сервер не отвечает..."
+                message: "Сервер не отвечает... / Server isn't responding..."
             });
         }
     }
@@ -39,12 +39,12 @@ export const getQuote = async (req, res) => {
         const doc = await Quote.findById(req.params.id)
         if (doc)
             res.status(200).json({
-                message: "Цитата найдена!",
+                message: "Цитата найдена! / Quote was successfully found!",
                 _doc: doc
             });
         else
             res.status(404).json({
-                message: "Не удалось найти цитату."
+                message: "Не удалось найти цитату. / Quote wasn't found. "
             });
     }
     catch (err) {
@@ -52,7 +52,7 @@ export const getQuote = async (req, res) => {
             console.error(err);
 
             res.status(500).json({
-                message: "Сервер не отвечает...",
+                message: "Сервер не отвечает... / Server isn't responding...",
             });
         }
     }

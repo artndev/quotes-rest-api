@@ -1,6 +1,12 @@
 import express from "express";
 import { saveQuoteValidation, idParamValidation } from "./validations.js";
-import { deleteQuote, getAllQuotes, getQuote, getRandomQuote, saveQuote } from "./controllers/Controller.js";
+import { 
+    deleteQuote, 
+    getAllQuotes, 
+    getQuote, 
+    getRandomQuote, 
+    saveQuote 
+} from "./controllers/Controller.js";
 import handleValidationErrors from "./handleValidationErrors.js";
 import { verifyAuthToken } from "./checkAuth.js";
 const app = express();
@@ -30,5 +36,5 @@ app.listen(PORT, (err) => {
         return;
     }
 
-    console.log(`Сервер на порту - ${PORT}!`);
+    console.log(`Server on the port / Сервер на порту - ${PORT}!`);
 });
