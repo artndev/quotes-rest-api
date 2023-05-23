@@ -2,6 +2,7 @@ import express from "express";
 import { saveQuoteValidation, idParamValidation } from "./validations.js";
 import { deleteQuote, getQuote, getRandomQuote, saveQuote } from "./controllers/Controller.js";
 import handleValidationErrors from "./handleValidationErrors.js";
+import { verifyAuthToken } from "./utils.js";
 const app = express();
 app.use(express.json());
 
@@ -17,11 +18,10 @@ app.get("/", (_, res) => {
         }
     });
 });
-app.get("/quotes/:id", idParamValidation, handleValidationErrors, getQuote);
-app.post("/quotes", saveQuoteValidation, handleValidationErrors, saveQuote);
-app.delete("/quotes/:id", idParamValidation, handleValidationErrors, deleteQuote);
 app.get("/random", getRandomQuote);
-
+app.get("/quotes/:id", idParamValidation, handleValidationErrors, getQuote);
+app.post("/quotes", verifyAuthToken, saveQuoteValidation, handleValidationErrors, saveQuote);
+app.delete("/quotes/:id", verifyAuthToken, idParamValidation, handleValidationErrors, deleteQuote);
 
 app.listen(8000, (err) => {
     if (err) {
