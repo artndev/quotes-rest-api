@@ -34,3 +34,5 @@ export const signAuthToken = (data = {}) => {
         }
     )
 }
+
+// console.log(signAuthToken({data: "0)910k_+=fe2k3r(*3,.;[ap295892KKl/eJ..Fu4-qw43k3!(*#8*$@NNNay3gr"}))

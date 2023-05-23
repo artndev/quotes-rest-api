@@ -120,3 +120,28 @@ export const getRandomQuote = async (_, res) => {
         return res.statusCode;
     }
 }
+
+
+export const getAllQuotes = async (_, res) => {
+    try {
+        await mongoose.connect(process.env.CONNECTION_URI);
+
+        const arr = await Quote.find()
+        res.status(200).json({
+            message: "Список цитат получен!",
+            _arr: arr
+        });
+    }
+    catch (err) {
+        if (err instanceof Error) {
+            console.error(err);
+
+            res.status(500).json({
+                message: "Сервер не отвечает...",
+            });
+        }
+    }
+    finally {
+        return res.statusCode;
+    }
+}
