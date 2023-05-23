@@ -11,6 +11,7 @@ app.get("/", (_, res) => {
     res.status(200).json({
         message: "The QUOTES-REST-API service. It's very simple and very useful!",
         description: {
+            getQuotes: "[GET] /quotes",
             getRandomQuote: "[GET] /random",
             getQuote: "[GET] /quotes/:id"
         }
