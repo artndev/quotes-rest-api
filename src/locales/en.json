@@ -1,0 +1,15 @@
+{
+	"Цитата успешно сохранена!": "Quote was successfully saved!",
+	"Цитата успешно найдена!": "Quote was successfully found!",
+	"Цитата успешно удалена!": "Quote was successfully deleted!",
+	"Случайная цитата успешно получена!": "Random quote was successfully received!",
+	"Список цитат успешно получен!": "Quotes list was successfully received!",
+	"Не удалось сохранить цитату.": "Quote wasn't saved correctly.",
+	"Не удалось найти цитату.": "Quote wasn't found correctly.",
+	"Не получилось удалить цитату.": "Quote wasn't deleted correctly.",
+	"Не удалось получить случайную цитату.": "Random quote wasn't received correctly.",
+	"Не удалось получить список цитат.": "Quotes list wan't received correctly.",
+	"Сервер не отвечает...": "Server isn't responding...",
+	"Произошла ошибка валидации.": "Validation error was occured.",
+	"Нет доступа.": "No access."
+}

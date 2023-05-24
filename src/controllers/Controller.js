@@ -1,147 +1,162 @@
-import dotenv from "dotenv";
-dotenv.config();
-import mongoose, { MongooseError } from "mongoose";
-import Quote from "./Models/Quote.js";
+require("dotenv").config();
+const i18n = require("i18n");
+const mongoose = require("mongoose");
+const Quote = require("./Models/Quote.js");
 
 
-export const saveQuote = async (req, res) => {
-    try {
-        await mongoose.connect(process.env.CONNECTION_URI);
-
-        const doc = await new Quote({ author: req.body.author, text: req.body.text }).save()
-        if (doc)
-            res.status(200).json({
-                message: "Цитата сохранена! / Quote was successfully saved!",
-                _doc: doc
-            });
-        else
-            throw new MongooseError;
-    } 
-    catch (err) {
-        if (err instanceof Error) {
-            console.error(err);
-
-            res.status(500).json({
-                message: "Сервер не отвечает... / Server isn't responding..."
-            });
+module.exports = {
+    saveQuote: async (req, res) => {
+        try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+    
+            const doc = await new Quote({ author: req.body.author, text: req.body.text })
+                .save()
+                .catch(() => { 
+                    return undefined;
+                });
+            if (doc)
+                res.status(200).json({
+                    message: i18n.__("Цитата успешно сохранена!"),
+                    _doc: doc
+                });
+            else 
+                res.status(400).json({
+                    message: "Не удалось сохранить цитату."
+                });
+        } 
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err);
+    
+                res.status(500).json({
+                    message: i18n.__("Сервер не отвечает...")
+                });
+            }
+        }
+        finally {
+            return res.statusCode;
+        }
+    },
+    getQuote: async (req, res) => {
+        try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+    
+            const doc = await Quote.findById(req.params.id)
+            if (doc)
+                res.status(200).json({
+                    message: i18n.__("Цитата успешно найдена!"),
+                    _doc: doc
+                });
+            else
+                res.status(404).json({
+                    message: i18n.__("Не удалось найти цитату.")
+                });
+        }
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err);
+    
+                res.status(500).json({
+                    message: i18n.__("Сервер не отвечает...")
+                });
+            }
+        }
+        finally {
+            return res.statusCode;
+        }
+    },
+    deleteQuote: async (req, res) => {
+        try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+    
+            const doc = await Quote.findOneAndDelete({ _id: req.params.id });
+            if (doc)
+                res.status(200).json({ 
+                    message: i18n.__("Цитата успешно удалена!"),
+                    _doc: doc
+                });
+            else
+                res.status(404).json({ 
+                    message: i18n.__("Не получилось удалить цитату.") 
+                });
+        }
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err);
+    
+                res.status(500).json({ 
+                    message: i18n.__("Сервер не отвечает...") 
+                });
+            }
+        }
+        finally {
+            return res.statusCode;
+        }
+    },
+    getRandomQuote: async (req, res) => {
+        try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+    
+            const doc = await Quote
+                .find()
+                .then((arr) => { 
+                    return arr[Math.floor(Math.random() * arr.length)] ;
+                });
+            if (doc)
+                res.status(200).json({
+                    message: i18n.__("Случайная цитата успешно получена!"),
+                    _doc: doc
+                });
+            else
+                res.status(404).json({ 
+                    message: i18n.__("Не удалось получить случайную цитату.")
+                });
+        }
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err);
+    
+                res.status(500).json({
+                    message: i18n.__("Сервер не отвечает...")
+                });
+            }
+        }
+        finally {
+            return res.statusCode;
+        }
+    },
+    getAllQuotes: async (req, res) => {
+        try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+    
+            const arr = await Quote.find()
+            if (arr.length > 0)
+                res.status(200).json({
+                    message: i18n.__("Список цитат успешно получен!"),
+                    _arr: arr
+                });
+            else
+                res.status(404).json({
+                    message: i18n.__("Не удалось получить список цитат.")
+                });
+        }
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err);
+    
+                res.status(500).json({
+                    message: i18n("Сервер не отвечает..."),
+                });
+            }
+        }
+        finally {
+            return res.statusCode;
         }
     }
-    finally {
-        return res.statusCode;
-    }
-}
-
-
-export const getQuote = async (req, res) => {
-    try {
-        await mongoose.connect(process.env.CONNECTION_URI);
-
-        const doc = await Quote.findById(req.params.id)
-        if (doc)
-            res.status(200).json({
-                message: "Цитата найдена! / Quote was successfully found!",
-                _doc: doc
-            });
-        else
-            res.status(404).json({
-                message: "Не удалось найти цитату. / Quote wasn't found. "
-            });
-    }
-    catch (err) {
-        if (err instanceof Error) {
-            console.error(err);
-
-            res.status(500).json({
-                message: "Сервер не отвечает... / Server isn't responding...",
-            });
-        }
-    }
-    finally {
-        return res.statusCode;
-    }
-}
-
-
-export const deleteQuote = async (req, res) => {
-    try {
-        await mongoose.connect(process.env.CONNECTION_URI);
-
-        const doc = await Quote.findOneAndDelete({ _id: req.params.id });
-        if (doc)
-            res.status(200).json({ 
-                message: "Цитата успешно удалена!",
-                _doc: doc
-            });
-        else
-            res.status(404).json({ 
-                message: "Не получилось удалить цитату." 
-            });
-    }
-    catch (err) {
-        if (err instanceof Error) {
-            console.error(err);
-
-            res.status(500).json({ 
-                message: "Сервер не отвечает..." 
-            });
-        }
-    }
-    finally {
-        return res.statusCode;
-    }
-}
-
-
-export const getRandomQuote = async (_, res) => {
-    try {
-        await mongoose.connect(process.env.CONNECTION_URI);
-
-        const doc = await Quote.find().then((arr) => { return arr[Math.floor(Math.random() * arr.length)] })
-        if (doc)
-            res.status(200).json({
-                message: "Случайная цитата получена!",
-                _doc: doc
-            });
-        else
-            res.status(404).json({ 
-                message: "Не удалось получить случайную цитату." 
-            });
-    }
-    catch (err) {
-        if (err instanceof Error) {
-            console.error(err);
-
-            res.status(500).json({
-                message: "Сервер не отвечает...",
-            });
-        }
-    }
-    finally {
-        return res.statusCode;
-    }
-}
-
-
-export const getAllQuotes = async (_, res) => {
-    try {
-        await mongoose.connect(process.env.CONNECTION_URI);
-
-        const arr = await Quote.find()
-        res.status(200).json({
-            message: "Список цитат получен!",
-            _arr: arr
-        });
-    }
-    catch (err) {
-        if (err instanceof Error) {
-            console.error(err);
-
-            res.status(500).json({
-                message: "Сервер не отвечает...",
-            });
-        }
-    }
-    finally {
-        return res.statusCode;
-    }
+    
 }

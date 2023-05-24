@@ -1,11 +1,14 @@
-import { validationResult } from 'express-validator';
+const i18n = require("i18n");
+const { validationResult } = require('express-validator');
 
 
-export default (req, res, next) => {
+module.exports = (req, res, next) => {
+    i18n.setLocale(req.query.lang || 'en')
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
         return res.status(400).json({
-            message: "Произошла ошибка валидации.",
+            message: i18n.__("Произошла ошибка валидации."),
             errors: errors.array()
         });
     }

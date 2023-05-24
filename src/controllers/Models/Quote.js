@@ -1,7 +1,7 @@
-import mongoose, { Schema, model } from "mongoose";
+const { default: mongoose, Schema, model } = require("mongoose");
 
 
-export default model("Quote", new Schema(
+module.exports = model("Quote", new Schema(
     {
         _id: {
             type: String,

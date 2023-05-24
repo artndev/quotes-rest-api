@@ -1,25 +1,36 @@
-import express from "express";
-import { saveQuoteValidation, idParamValidation } from "./validations.js";
-import { 
+const express = require("express");
+const i18n = require("i18n");
+const rootPath = require("app-root-path")
+const { saveQuoteValidation, idParamValidation } = require("./validations.js");
+const { 
     deleteQuote, 
     getAllQuotes, 
     getQuote, 
     getRandomQuote, 
     saveQuote 
-} from "./controllers/Controller.js";
-import handleValidationErrors from "./handleValidationErrors.js";
-import { verifyAuthToken } from "./checkAuth.js";
+} = require("./controllers/Controller.js");
+const handleValidationErrors = require("./handleValidationErrors.js");
+const { verifyAuthToken } = require("./checkAuth.js");
+
 const app = express();
+i18n.configure({
+    locales: ['ru', 'en'],
+    directory: rootPath + "/src/locales"
+})
 app.use(express.json());
+app.use(i18n.init)
 
 
 app.get("/", (_, res) => {
     res.status(200).json({
-        message: "The QUOTES-REST-API service. It's very simple and very useful!",
-        description: {
+        message: "The artndev's QUOTES-REST-API service. It's very simple and very useful!",
+        commands: {
             getQuotes: "[GET] /quotes",
             getRandomQuote: "[GET] /random",
             getQuote: "[GET] /quotes/:id"
+        },
+        flags: {
+            "?lang=": ['ru', 'en']
         }
     });
 });
