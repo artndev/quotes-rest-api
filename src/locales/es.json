@@ -1,0 +1,16 @@
+{
+    "Испанский язык": "",
+    "Цитаты успешно сохранены!": "(%s) ¡Cotizaciones guardadas con éxito!",
+	"Цитата успешно найдена!": "¡Cotización encontrada con éxito!",
+	"Цитата успешно удалена!": "¡Cotización eliminada con éxito!",
+	"Случайная цитата успешно получена!": "¡Presupuesto aleatorio recibido con éxito!",
+	"Список цитат успешно получен!": "¡Lista de cotizaciones recibidas con éxito!",
+	"Не удалось сохранить цитаты.": "Error al guardar las comillas.",
+	"Не удалось найти цитату.": "No se pudo encontrar una cotización.",
+	"Не получилось удалить цитату.": "No se pudo eliminar la cita.",
+	"Не удалось получить случайную цитату.": "No se pudo obtener la cotización aleatoria.",
+	"Не удалось получить список цитат.": "No se pudo obtener la lista de cotizaciones.",
+	"Сервер не отвечает...": "El servidor no responde...",
+	"Произошла ошибка валидации.": "Se ha producido un error de validación.",
+	"Нет доступа.": "Sin acceso."
+}

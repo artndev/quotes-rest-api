@@ -14,7 +14,11 @@ const { verifyAuthToken } = require("./checkAuth.js");
 
 const app = express();
 i18n.configure({
-    locales: ['ru', 'en'],
+    locales: [
+        'ru', 'en',
+        'es', 'fr',
+        'zh', 'ja'
+    ],
     directory: rootPath + "/src/locales"
 })
 app.use(express.json());
@@ -30,7 +34,11 @@ app.get("/", (_, res) => {
             getQuote: "[GET] /quotes/:id"
         },
         flags: {
-            "?lang=": ['ru', 'en']
+            "?lang=": [
+                'ru', 'en', 
+                'es', 'fr',
+                'zh', 'ja'
+            ]
         }
     });
 });
