@@ -1,27 +1,29 @@
 const { default: mongoose, Schema, model } = require("mongoose");
 
 
-module.exports = model("Quote", new Schema(
+const QuoteSchema = new Schema(
     {
         _id: {
             type: String,
             required: false,
             unique: true,
-            default: new mongoose.Types.ObjectId().toString()
+            default: () => { return (new mongoose.Types.ObjectId).toString() }
         },
         author: {
             type: String,
             required: false,
+            unique: false,
             default: "Unknown Author"
         },
         text: {
             type: String,
             required: true,
-            unique: true,
+            unique: true
         }
     },
     { 
         collection: "quotes", 
         versionKey: false 
     }
-));
+)
+module.exports = model("Quote", QuoteSchema)

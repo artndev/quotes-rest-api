@@ -3,15 +3,18 @@ const { body, param } = require("express-validator");
 
 module.exports = {
     saveQuoteValidation: [
-        body("text")
-            .isString()
-            .notEmpty()
-            .isLength({ min: 10, max: 100 }),
-        body("author")
+        body("quotes")
+            .isArray()
+            .notEmpty(),
+        body("quotes.*.author")
             .isString()
             .notEmpty()
             .isLength({ min: 2, max: 20 })
-            .optional()
+            .optional(),
+        body("quotes.*.text")
+            .isString()
+            .notEmpty()
+            .isLength({ min: 10, max: 100 }),
     ],
     idParamValidation: [
         param("id").isString().notEmpty()

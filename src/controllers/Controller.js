@@ -1,29 +1,37 @@
 require("dotenv").config();
 const i18n = require("i18n");
 const mongoose = require("mongoose");
-const Quote = require("./Models/Quote.js");
+const QuoteModel = require("./Models/Quote.js");
+const util = require("node:util")
 
 
 module.exports = {
     saveQuote: async (req, res) => {
+        i18n.setLocale(req.query.lang || 'en')
+        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
+
         try {
-            i18n.setLocale(req.query.lang || 'en')
-            await mongoose.connect(process.env.CONNECTION_URI);
-    
-            const doc = await new Quote({ author: req.body.author, text: req.body.text })
-                .save()
-                .catch(() => { 
-                    return undefined;
-                });
-            if (doc)
-                res.status(200).json({
-                    message: i18n.__("Цитата успешно сохранена!"),
-                    _doc: doc
-                });
-            else 
-                res.status(400).json({
-                    message: "Не удалось сохранить цитату."
-                });
+            const arr = req.body.quotes;
+            let state = true;
+            for (let i = 0; i < arr.length; i++) {
+                if (!state)
+                    break;
+
+                await (new QuoteModel({ author: arr[i].author, text: arr[i].text }))
+                    .save()
+                    .then(() => {
+                        if (i === arr.length - 1)
+                            res.status(200).json({
+                                message: util.format(i18n.__("Цитаты успешно сохранены!"), arr.length)
+                            });
+                    })
+                    .catch(() => {
+                        res.status(400).json({
+                            message: i18n.__("Не удалось сохранить цитаты.")
+                        });
+                        state = false;
+                    })
+            }
         } 
         catch (err) {
             if (err instanceof Error) {
@@ -35,15 +43,16 @@ module.exports = {
             }
         }
         finally {
+            await CONNECTION.disconnect()
             return res.statusCode;
         }
     },
     getQuote: async (req, res) => {
+        i18n.setLocale(req.query.lang || 'en')
+        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
+
         try {
-            i18n.setLocale(req.query.lang || 'en')
-            await mongoose.connect(process.env.CONNECTION_URI);
-    
-            const doc = await Quote.findById(req.params.id)
+            const doc = await QuoteModel.findById(req.params.id)
             if (doc)
                 res.status(200).json({
                     message: i18n.__("Цитата успешно найдена!"),
@@ -64,15 +73,16 @@ module.exports = {
             }
         }
         finally {
+            await CONNECTION.disconnect()
             return res.statusCode;
         }
     },
     deleteQuote: async (req, res) => {
+        i18n.setLocale(req.query.lang || 'en')
+        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
+
         try {
-            i18n.setLocale(req.query.lang || 'en')
-            await mongoose.connect(process.env.CONNECTION_URI);
-    
-            const doc = await Quote.findOneAndDelete({ _id: req.params.id });
+            const doc = await QuoteModel.findOneAndDelete({ _id: req.params.id });
             if (doc)
                 res.status(200).json({ 
                     message: i18n.__("Цитата успешно удалена!"),
@@ -93,18 +103,19 @@ module.exports = {
             }
         }
         finally {
+            await CONNECTION.disconnect()
             return res.statusCode;
         }
     },
     getRandomQuote: async (req, res) => {
+        i18n.setLocale(req.query.lang || 'en')
+        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
+
         try {
-            i18n.setLocale(req.query.lang || 'en')
-            await mongoose.connect(process.env.CONNECTION_URI);
-    
-            const doc = await Quote
+            const doc = await QuoteModel
                 .find()
                 .then((arr) => { 
-                    return arr[Math.floor(Math.random() * arr.length)] ;
+                    return arr[Math.floor(Math.random() * arr.length)];
                 });
             if (doc)
                 res.status(200).json({
@@ -126,15 +137,16 @@ module.exports = {
             }
         }
         finally {
+            await CONNECTION.disconnect()
             return res.statusCode;
         }
     },
     getAllQuotes: async (req, res) => {
+        i18n.setLocale(req.query.lang || 'en')
+        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
+
         try {
-            i18n.setLocale(req.query.lang || 'en')
-            await mongoose.connect(process.env.CONNECTION_URI);
-    
-            const arr = await Quote.find()
+            const arr = await QuoteModel.find()
             if (arr.length > 0)
                 res.status(200).json({
                     message: i18n.__("Список цитат успешно получен!"),
@@ -155,6 +167,7 @@ module.exports = {
             }
         }
         finally {
+            await CONNECTION.disconnect()
             return res.statusCode;
         }
     }
