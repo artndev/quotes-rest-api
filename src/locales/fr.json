@@ -1,10 +1,10 @@
 {
 	"Французский язык": "",
-	"Цитаты успешно сохранены!": "(%s) Devis enregistrés avec succès !",
-	"Цитата успешно найдена!": "Devis trouvé avec succès !",
-	"Цитата успешно удалена!": "Citation supprimée avec succès !",
-	"Случайная цитата успешно получена!": "Devis aléatoire reçu avec succès !",
-	"Список цитат успешно получен!": "Liste des devis reçus avec succès !",
+	"Цитаты успешно сохранены!": "(%s) Devis enregistrés avec succès!",
+	"Цитата успешно найдена!": "Devis trouvé avec succès!",
+	"Цитата успешно удалена!": "Citation supprimée avec succès!",
+	"Случайная цитата успешно получена!": "Devis aléatoire reçu avec succès!",
+	"Список цитат успешно получен!": "Liste des devis reçus avec succès!",
 	"Не удалось сохранить цитаты.": "Échec de l'enregistrement des devis.",
 	"Не удалось найти цитату.": "Impossible de trouver un devis.",
 	"Не получилось удалить цитату.": "Échec de l'obtention d'un devis aléatoire.",
@@ -12,5 +12,6 @@
 	"Не удалось получить список цитат.": "Impossible d'obtenir la liste des devis.",
 	"Сервер не отвечает...": "Le serveur ne répond pas...",
 	"Произошла ошибка валидации.": "Une erreur de validation s'est produite.",
-	"Нет доступа.": "Pas d'accès."
+	"Нет доступа.": "Pas d'accès.",
+	"The artndev's QUOTES-REST-API service. It's very simple and very useful!": "Le service QUOTES-REST-API d'artndev. C'est très simple et très utile!"
 }

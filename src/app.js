@@ -15,31 +15,23 @@ const { setLocale } = require("./utils.js")
 
 const app = express();
 i18n.configure({
-    locales: [
-        'ru', 'en',
-        'es', 'fr',
-        'zh', 'ja'
-    ],
+    locales: ['ru', 'en', 'es', 'fr', 'zh', 'ja'],
     directory: rootPath + "/src/locales"
 })
 app.use(express.json());
 app.use(i18n.init)
 
 
-app.get("/", (_, res) => {
+app.get("/", setLocale, (_, res) => {
     res.status(200).json({
-        message: "The artndev's QUOTES-REST-API service. It's very simple and very useful!",
+        message: i18n.__("The artndev's QUOTES-REST-API service. It's very simple and very useful!"),
         commands: {
             getQuotes: "[GET] /quotes",
             getRandomQuote: "[GET] /random",
             getQuote: "[GET] /quotes/:id"
         },
         flags: {
-            "?lang=": [
-                'ru', 'en', 
-                'es', 'fr',
-                'zh', 'ja'
-            ]
+            "?lang=": ['ru', 'en', 'es', 'fr', 'zh', 'ja']
         }
     });
 });

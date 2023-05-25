@@ -12,5 +12,6 @@
 	"Не удалось получить список цитат.": "Quotes list wan't received correctly.",
 	"Сервер не отвечает...": "Server isn't responding...",
 	"Произошла ошибка валидации.": "Validation error was occured.",
-	"Нет доступа.": "No access."
+	"Нет доступа.": "No access.",
+	"The artndev's QUOTES-REST-API service. It's very simple and very useful!": "The artndev's QUOTES-REST-API service. It's very simple and very useful!"
 }
