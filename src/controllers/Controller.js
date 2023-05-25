@@ -2,13 +2,13 @@ require("dotenv").config();
 const i18n = require("i18n");
 const mongoose = require("mongoose");
 const QuoteModel = require("./Models/Quote.js");
-const util = require("node:util")
+const util = require("node:util");
+const { getRandomArbitrary } = require("../utils.js");
 
 
 module.exports = {
     saveQuote: async (req, res) => {
         try {
-            i18n.setLocale(req.query.lang || 'en')
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const arr = req.body.quotes;
@@ -43,13 +43,12 @@ module.exports = {
             }
         }
         finally {
-            await mongoose.disconnect()
+            await mongoose.disconnect();
             return res.statusCode;
         }
     },
     getQuote: async (req, res) => {
         try {
-            i18n.setLocale(req.query.lang || 'en')
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const doc = await QuoteModel.findById(req.params.id)
@@ -73,13 +72,12 @@ module.exports = {
             }
         }
         finally {
-            await mongoose.disconnect()
+            await mongoose.disconnect();
             return res.statusCode;
         }
     },
     deleteQuote: async (req, res) => {
         try {
-            i18n.setLocale(req.query.lang || 'en')
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const doc = await QuoteModel.findOneAndDelete({ _id: req.params.id });
@@ -103,19 +101,18 @@ module.exports = {
             }
         }
         finally {
-            await mongoose.disconnect()
+            await mongoose.disconnect();
             return res.statusCode;
         }
     },
-    getRandomQuote: async (req, res) => {
+    getRandomQuote: async (_, res) => {
         try {
-            i18n.setLocale(req.query.lang || 'en')
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const doc = await QuoteModel
                 .find()
                 .then((arr) => { 
-                    return arr[Math.floor(Math.random() * arr.length)];
+                    return arr[getRandomArbitrary(0, arr.length)];
                 });
             if (doc)
                 res.status(200).json({
@@ -137,13 +134,12 @@ module.exports = {
             }
         }
         finally {
-            await mongoose.disconnect()
+            await mongoose.disconnect();
             return res.statusCode;
         }
     },
-    getAllQuotes: async (req, res) => {
+    getAllQuotes: async (_, res) => {
         try {
-            i18n.setLocale(req.query.lang || 'en')
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const arr = await QuoteModel.find()
@@ -167,7 +163,7 @@ module.exports = {
             }
         }
         finally {
-            await mongoose.disconnect()
+            await mongoose.disconnect();
             return res.statusCode;
         }
     }

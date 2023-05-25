@@ -11,6 +11,7 @@ const {
 } = require("./controllers/Controller.js");
 const handleValidationErrors = require("./handleValidationErrors.js");
 const { verifyAuthToken } = require("./checkAuth.js");
+const { setLocale } = require("./utils.js")
 
 const app = express();
 i18n.configure({
@@ -42,11 +43,11 @@ app.get("/", (_, res) => {
         }
     });
 });
-app.get("/random", getRandomQuote);
-app.get("/quotes", getAllQuotes);
-app.get("/quotes/:id", idParamValidation, handleValidationErrors, getQuote);
-app.delete("/quotes/:id", verifyAuthToken, idParamValidation, handleValidationErrors, deleteQuote);
-app.post("/quotes", verifyAuthToken, saveQuoteValidation, handleValidationErrors, saveQuote);
+app.get("/random", setLocale, getRandomQuote);
+app.get("/quotes", setLocale, getAllQuotes);
+app.get("/quotes/:id", setLocale, idParamValidation, handleValidationErrors, getQuote);
+app.delete("/quotes/:id", setLocale, verifyAuthToken, idParamValidation, handleValidationErrors, deleteQuote);
+app.post("/quotes", setLocale, verifyAuthToken, saveQuoteValidation, handleValidationErrors, saveQuote);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, (err) => {

@@ -3,7 +3,6 @@ const { validationResult } = require('express-validator');
 
 
 module.exports = (req, res, next) => {
-    i18n.setLocale(req.query.lang || 'en')
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {

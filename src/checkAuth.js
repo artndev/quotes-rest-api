@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     verifyAuthToken: (req, res, next) => {
-        i18n.setLocale(req.query.lang || 'en')
         const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
     
         if (token) {
