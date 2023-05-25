@@ -7,10 +7,10 @@ const util = require("node:util")
 
 module.exports = {
     saveQuote: async (req, res) => {
-        i18n.setLocale(req.query.lang || 'en')
-        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
-
         try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+
             const arr = req.body.quotes;
             let state = true;
             for (let i = 0; i < arr.length; i++) {
@@ -43,15 +43,15 @@ module.exports = {
             }
         }
         finally {
-            await CONNECTION.disconnect()
+            await mongoose.disconnect()
             return res.statusCode;
         }
     },
     getQuote: async (req, res) => {
-        i18n.setLocale(req.query.lang || 'en')
-        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
-
         try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+
             const doc = await QuoteModel.findById(req.params.id)
             if (doc)
                 res.status(200).json({
@@ -73,15 +73,15 @@ module.exports = {
             }
         }
         finally {
-            await CONNECTION.disconnect()
+            await mongoose.disconnect()
             return res.statusCode;
         }
     },
     deleteQuote: async (req, res) => {
-        i18n.setLocale(req.query.lang || 'en')
-        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
-
         try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+
             const doc = await QuoteModel.findOneAndDelete({ _id: req.params.id });
             if (doc)
                 res.status(200).json({ 
@@ -103,15 +103,15 @@ module.exports = {
             }
         }
         finally {
-            await CONNECTION.disconnect()
+            await mongoose.disconnect()
             return res.statusCode;
         }
     },
     getRandomQuote: async (req, res) => {
-        i18n.setLocale(req.query.lang || 'en')
-        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
-
         try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+
             const doc = await QuoteModel
                 .find()
                 .then((arr) => { 
@@ -137,15 +137,15 @@ module.exports = {
             }
         }
         finally {
-            await CONNECTION.disconnect()
+            await mongoose.disconnect()
             return res.statusCode;
         }
     },
     getAllQuotes: async (req, res) => {
-        i18n.setLocale(req.query.lang || 'en')
-        const CONNECTION = await mongoose.connect(process.env.CONNECTION_URI);
-
         try {
+            i18n.setLocale(req.query.lang || 'en')
+            await mongoose.connect(process.env.CONNECTION_URI);
+
             const arr = await QuoteModel.find()
             if (arr.length > 0)
                 res.status(200).json({
@@ -167,7 +167,7 @@ module.exports = {
             }
         }
         finally {
-            await CONNECTION.disconnect()
+            await mongoose.disconnect()
             return res.statusCode;
         }
     }
