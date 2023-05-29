@@ -29,9 +29,3 @@ module.exports = {
         )
     }
 }
-
-// console.log(
-//     module.exports.signAuthToken({ data: "" }) + "\n" +
-//     module.exports.signAuthToken({ data: "" }) + "\n" + 
-//     module.exports.signAuthToken({ data: "" })
-// )

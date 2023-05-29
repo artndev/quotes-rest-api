@@ -9,9 +9,8 @@ const {
     getRandomQuote, 
     saveQuote 
 } = require("./controllers/db_controller.js");
-const handleValidationErrors = require("./handle_valids_errors.js");
 const { verifyAuthToken } = require("./auth.js");
-const { setLocale } = require("./utils.js")
+const { setLocale, handleValidationErrors } = require("./utils.js")
 
 const app = express();
 i18n.configure({
