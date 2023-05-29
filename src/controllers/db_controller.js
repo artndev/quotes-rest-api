@@ -16,64 +16,65 @@ module.exports = {
             for (let i = 0; i < arr.length; i++) {
                 if (!state)
                     break;
-
-                await (new QuoteModel({ author: arr[i].author, text: arr[i].text }))
-                    .save()
-                    .then(() => {
-                        if (i === arr.length - 1)
-                            res.status(200).json({
-                                message: util.format(i18n.__("Цитаты успешно сохранены!"), arr.length)
-                            });
-                    })
+                
+                const q = arr[i];
+                const doc = new QuoteModel({ author: q["author"], text: q["text"] });
+                await doc.save()
                     .catch(() => {
-                        res.status(400).json({
+                        res.status(500).json({
                             message: i18n.__("Не удалось сохранить цитаты.")
                         });
                         state = false;
-                    })
+                    });
+
+                if (i === arr.length - 1) {
+                    res.status(200).json({
+                        message: util.format(i18n.__("Цитаты успешно сохранены!"), arr.length),
+                        _arr: arr
+                    });
+                    break;
+                }
             }
+            return;
         } 
         catch (err) {
-            if (err instanceof Error) {
-                console.error(err);
+            console.error(err);
     
-                res.status(500).json({
-                    message: i18n.__("Сервер не отвечает...")
-                });
-            }
+            res.status(500).json({
+                message: i18n.__("Сервер не отвечает...")
+            });
         }
         finally {
             await mongoose.disconnect();
-            return res.statusCode;
         }
     },
     getQuote: async (req, res) => {
         try {
             await mongoose.connect(process.env.CONNECTION_URI);
 
-            const doc = await QuoteModel.findById(req.params.id)
-            if (doc)
+            const doc = await QuoteModel.findById(req.params.id);
+            if (doc) {
                 res.status(200).json({
                     message: i18n.__("Цитата успешно найдена!"),
                     _doc: doc
                 });
-            else
+            }
+            else {
                 res.status(404).json({
                     message: i18n.__("Не удалось найти цитату.")
                 });
+            }
+            return;
         }
         catch (err) {
-            if (err instanceof Error) {
-                console.error(err);
+            console.error(err);
     
-                res.status(500).json({
-                    message: i18n.__("Сервер не отвечает...")
-                });
-            }
+            res.status(500).json({
+                message: i18n.__("Сервер не отвечает...")
+            });
         }
         finally {
             await mongoose.disconnect();
-            return res.statusCode;
         }
     },
     deleteQuote: async (req, res) => {
@@ -81,61 +82,58 @@ module.exports = {
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const doc = await QuoteModel.findOneAndDelete({ _id: req.params.id });
-            if (doc)
+            if (doc) {
                 res.status(200).json({ 
                     message: i18n.__("Цитата успешно удалена!"),
                     _doc: doc
                 });
-            else
+            }
+            else {
                 res.status(404).json({ 
                     message: i18n.__("Не получилось удалить цитату.") 
                 });
+            }
+            return;
         }
         catch (err) {
-            if (err instanceof Error) {
-                console.error(err);
+            console.error(err);
     
-                res.status(500).json({ 
-                    message: i18n.__("Сервер не отвечает...") 
-                });
-            }
+            res.status(500).json({ 
+                message: i18n.__("Сервер не отвечает...") 
+            });
         }
         finally {
             await mongoose.disconnect();
-            return res.statusCode;
         }
     },
     getRandomQuote: async (_, res) => {
         try {
             await mongoose.connect(process.env.CONNECTION_URI);
 
-            const doc = await QuoteModel
-                .find()
-                .then((arr) => { 
-                    return arr[getRandomArbitrary(0, arr.length)];
-                });
-            if (doc)
+            const arr = await QuoteModel.find();
+            const doc = arr.at(getRandomArbitrary(0, arr.length - 1));
+            if (doc) {
                 res.status(200).json({
                     message: i18n.__("Случайная цитата успешно получена!"),
                     _doc: doc
                 });
-            else
+            }
+            else {
                 res.status(404).json({ 
                     message: i18n.__("Не удалось получить случайную цитату.")
                 });
+            }
+            return;
         }
         catch (err) {
-            if (err instanceof Error) {
-                console.error(err);
+            console.error(err);
     
-                res.status(500).json({
-                    message: i18n.__("Сервер не отвечает...")
-                });
-            }
+            res.status(500).json({
+                message: i18n.__("Сервер не отвечает...")
+            });
         }
         finally {
             await mongoose.disconnect();
-            return res.statusCode;
         }
     },
     getAllQuotes: async (_, res) => {
@@ -143,28 +141,28 @@ module.exports = {
             await mongoose.connect(process.env.CONNECTION_URI);
 
             const arr = await QuoteModel.find()
-            if (arr.length > 0)
+            if (arr.length > 0) {
                 res.status(200).json({
                     message: i18n.__("Список цитат успешно получен!"),
                     _arr: arr
                 });
-            else
+            }
+            else {
                 res.status(404).json({
                     message: i18n.__("Не удалось получить список цитат.")
                 });
+            }
+            return;
         }
         catch (err) {
-            if (err instanceof Error) {
-                console.error(err);
+            console.error(err);
     
-                res.status(500).json({
-                    message: i18n("Сервер не отвечает..."),
-                });
-            }
+            res.status(500).json({
+                message: i18n("Сервер не отвечает..."),
+            });
         }
         finally {
             await mongoose.disconnect();
-            return res.statusCode;
         }
     }
     

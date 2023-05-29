@@ -1,16 +1,16 @@
 const express = require("express");
 const i18n = require("i18n");
-const rootPath = require("app-root-path")
-const { saveQuoteValidation, idParamValidation } = require("./validations.js");
+const rootPath = require("app-root-path");
+const { saveQuoteValidation, idParamValidation } = require("./valids.js");
 const { 
     deleteQuote, 
     getAllQuotes, 
     getQuote, 
     getRandomQuote, 
     saveQuote 
-} = require("./controllers/Controller.js");
-const handleValidationErrors = require("./handleValidationErrors.js");
-const { verifyAuthToken } = require("./checkAuth.js");
+} = require("./controllers/db_controller.js");
+const handleValidationErrors = require("./handle_valids_errors.js");
+const { verifyAuthToken } = require("./auth.js");
 const { setLocale } = require("./utils.js")
 
 const app = express();

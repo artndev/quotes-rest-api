@@ -17,6 +17,8 @@ module.exports = {
             .isLength({ min: 10, max: 100 }),
     ],
     idParamValidation: [
-        param("id").isString().notEmpty()
+        param("id")
+            .isString()
+            .notEmpty()
     ]
 }

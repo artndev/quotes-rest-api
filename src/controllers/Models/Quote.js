@@ -1,18 +1,21 @@
 const { default: mongoose, Schema, model } = require("mongoose");
 
 
-const QuoteSchema = new Schema(
+const quoteSchema = new Schema(
     {
         _id: {
             type: String,
             required: false,
             unique: true,
-            default: () => { return (new mongoose.Types.ObjectId).toString() }
+            default: () => { 
+                const objectId = new mongoose.Types.ObjectId();
+
+                return objectId.toString();
+            }
         },
         author: {
             type: String,
             required: false,
-            unique: false,
             default: "Unknown Author"
         },
         text: {
@@ -26,4 +29,4 @@ const QuoteSchema = new Schema(
         versionKey: false 
     }
 )
-module.exports = model("Quote", QuoteSchema)
+module.exports = model("Quote", quoteSchema)
