@@ -13,15 +13,21 @@ const quoteSchema = new Schema(
                 return objectId.toString();
             }
         },
-        author: {
-            type: String,
-            required: false,
-            default: "Unknown Author"
-        },
         text: {
             type: String,
             required: true,
             unique: true
+        },
+        author: {
+            type: String,
+            required: false,
+            default: "Unknown"
+        },
+        tags: {
+            type: Array,
+            of: String,
+            required: false,
+            default: []
         }
     },
     { 

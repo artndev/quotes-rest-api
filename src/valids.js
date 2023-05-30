@@ -9,7 +9,7 @@ module.exports = {
         body("quotes.*.author")
             .isString()
             .notEmpty()
-            .isLength({ min: 2, max: 20 })
+            .isLength({ min: 3 })
             .optional(),
         body("quotes.*.text")
             .isString()
@@ -20,5 +20,13 @@ module.exports = {
         param("id")
             .isString()
             .notEmpty()
-    ]
+            .isLength({ min: 3 })
+    ],
+    tagParamValidation: [
+        param("tag")
+            .isString()
+            .notEmpty()
+            .isLength({ min: 3 })
+    ],
 }
+

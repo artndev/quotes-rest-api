@@ -11,26 +11,26 @@ module.exports = {
         try {
             await mongoose.connect(process.env.CONNECTION_URI);
 
-            const arr = req.body.quotes;
+            const docs = req.body.quotes;
             let state = true;
-            for (let i = 0; i < arr.length; i++) {
+            for (let i = 0; i < docs.length; i++) {
                 if (!state)
                     break;
                 
-                const q = arr[i];
-                const doc = new QuoteModel({ author: q["author"], text: q["text"] });
-                await doc.save()
+                await (new QuoteModel({ author: docs[i]["author"], text: docs[i]["text"] }))
+                    .save()
                     .catch(() => {
-                        res.status(500).json({
-                            message: i18n.__("Не удалось сохранить цитаты.")
+                        res.status(400).json({
+                            message: i18n.__("Не удалось сохранить цитаты."),
+                            _arr: docs
                         });
                         state = false;
                     });
 
-                if (i === arr.length - 1) {
+                if (i === docs.length - 1) {
                     res.status(200).json({
-                        message: util.format(i18n.__("Цитаты успешно сохранены!"), arr.length),
-                        _arr: arr
+                        message: util.format(i18n.__("Цитаты успешно сохранены!"), docs.length),
+                        _arr: docs
                     });
                     break;
                 }
@@ -140,11 +140,11 @@ module.exports = {
         try {
             await mongoose.connect(process.env.CONNECTION_URI);
 
-            const arr = await QuoteModel.find()
-            if (arr.length > 0) {
+            const docs = await QuoteModel.find();
+            if (docs.length > 0) {
                 res.status(200).json({
                     message: i18n.__("Список цитат успешно получен!"),
-                    _arr: arr
+                    _arr: docs
                 });
             }
             else {
@@ -164,6 +164,37 @@ module.exports = {
         finally {
             await mongoose.disconnect();
         }
-    }
+    },
+    getQuotesByTag: async (req, res) => {
+        try {
+            await mongoose.connect(process.env.CONNECTION_URI);
+
+            const arr = await QuoteModel.find();
+            const docs = await arr.filter((quote) => { 
+                return req.params.tag !== "none" ? quote["tags"].includes(req.params.tag) : true
+            });
+            if (docs.length > 0) {
+                res.status(200).json({
+                    message: i18n.__("Список цитат успешно получен!"),
+                    _arr: docs
+                });
+            }
+            else {
+                res.status(404).json({
+                    message: i18n.__("Не удалось получить список цитат.")
+                });
+            }
+            return;
+        }
+        catch (err) {
+            console.error(err);
     
+            res.status(500).json({
+                message: i18n.__("Сервер не отвечает..."),
+            });
+        }
+        finally {
+            await mongoose.disconnect();
+        }
+    }
 }

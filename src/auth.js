@@ -5,8 +5,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     verifyAuthToken: (req, res, next) => {
-        const authorization = req.headers.authorization || '';
-        const token = authorization.replace(/Bearer\s?/, '');
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
     
         try {
             jwt.verify(token, process.env.SECRET_KEY);
@@ -27,5 +26,5 @@ module.exports = {
                 expiresIn: "30d"
             }
         )
-    }
+    },
 }
