@@ -8,9 +8,7 @@ const quoteSchema = new Schema(
             required: false,
             unique: true,
             default: () => { 
-                const objectId = new mongoose.Types.ObjectId();
-
-                return objectId.toString();
+                return (new mongoose.Types.ObjectId()).toString();
             }
         },
         text: {
@@ -21,13 +19,13 @@ const quoteSchema = new Schema(
         author: {
             type: String,
             required: false,
-            default: "Unknown"
+            default: "Unknown Author"
         },
         tags: {
             type: Array,
             of: String,
-            required: false,
-            default: []
+            required: true,
+            default: ["none"]
         }
     },
     { 
