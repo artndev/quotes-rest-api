@@ -21,8 +21,7 @@ module.exports = {
                     .save()
                     .catch(() => {
                         res.status(400).json({
-                            message: i18n.__("Не удалось сохранить цитаты."),
-                            _arr: docs
+                            message: i18n.__("Не удалось сохранить цитаты.")
                         });
                         state = false;
                     });
@@ -171,7 +170,7 @@ module.exports = {
 
             const arr = await QuoteModel.find();
             const docs = await arr.filter((quote) => { 
-                return req.params.tag !== "none" ? quote["tags"].includes(req.params.tag) : true
+                return req.params.tag ? quote["tags"].includes(req.params.tag) : true
             });
             if (docs.length > 0) {
                 res.status(200).json({
