@@ -18,8 +18,7 @@ app.use("/", mainRouters)
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, (err) => {
     if (err) {
-        console.error(err);
-        return;
+        return console.error(err);
     }
 
     console.log(`Server is on the port - ${PORT}!`);
