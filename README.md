@@ -41,10 +41,7 @@ GET /quotes/:id ?lang=en
 		"_id": "6478f4758ef37e413f2bcad9",
 		"text": "Your time is limited, so don't waste it living someone else's life.",
 		"author": "Steve Jobs",
-		"tags": [
-			"motivation",
-            "business"
-		]
+		"tags": ["motivation", "business"]
 	}
 }
 ```
@@ -70,9 +67,7 @@ GET /random ?lang=en
 		"_id": "6478f807c0e5c040ed849d63",
 		"text": "Any intelligent fool can make things bigger, more complex, and more violent.",
 		"author": "Albert Einstein",
-		"tags": [
-			"intelligence"
-		]
+		"tags": ["intelligence"]
 	}
 }
 ```
@@ -99,18 +94,13 @@ GET /quotes ?lang=en
 			"_id": "6478f4758ef37e413f2bcad9",
 			"text": "Your time is limited, so don't waste it living someone else's life.",
 			"author": "Steve Jobs",
-			"tags": [
-				"motivation",
-				"business"
-			]
+			"tags": ["motivation", "business"]
 		},
 		{
 			"_id": "6478f807c0e5c040ed849d63",
 			"text": "Any intelligent fool can make things bigger, more complex, and more violent.",
 			"author": "Albert Einstein",
-			"tags": [
-				"intelligence"
-			]
+			"tags": ["intelligence"]
 		}
 	}
 }
@@ -139,10 +129,7 @@ GET /tags/:tag ?lang=en
 			"_id": "6478f4758ef37e413f2bcad9",
 			"text": "Your time is limited, so don't waste it living someone else's life.",
 			"author": "Steve Jobs",
-			"tags": [
-				"motivation",
-				"business"
-			]
+			"tags": ["motivation", "business"]
 		}
 	}
 }
