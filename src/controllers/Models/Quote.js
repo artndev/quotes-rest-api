@@ -7,9 +7,7 @@ const quoteSchema = new Schema(
             type: String,
             required: false,
             unique: true,
-            default: () => { 
-                return (new mongoose.Types.ObjectId()).toString();
-            }
+            default: () => (new mongoose.Types.ObjectId()).toString()
         },
         text: {
             type: String,
@@ -24,7 +22,7 @@ const quoteSchema = new Schema(
         tags: {
             type: Array,
             of: String,
-            required: true,
+            required: false,
             default: ["none"]
         }
     },
