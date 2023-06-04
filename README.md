@@ -2,7 +2,7 @@ Quts is a simple, free and open-source quotations API for everyone.
 
 ## API Server
 ```
-https://quotes-rest-api.up.railway.app/
+https://quts.up.railway.app/
 ```
 
 ### Supported languages
