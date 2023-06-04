@@ -28,5 +28,3 @@ module.exports = {
         )
     },
 }
-
-console.log(module.exports.signAuthToken({data: "j#Iu@@%%#$89%!+904Nk__=qo/?-)73^i{{}"}));

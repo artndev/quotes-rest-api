@@ -5,8 +5,8 @@
   "main": "app.js",
   "type": "commonjs",
   "scripts": {
-    "s": "nodemon ./src/app.js",
-    "a": "node ./src/auth.js"
+    "start": "nodemon ./src/app.js",
+    "auth": "node ./src/auth.js"
   },
   "repository": {
     "type": "git",
