@@ -122,7 +122,7 @@ GET /quotes ?lang=en
 ```HTTP
 GET /tags/:tag ?lang=en
 ```
-> ✅ Returns a list of the all quotes in the database
+> ✅ Returns a list of the all quotes in the database with the stated tag
 
 #### Query parameters
 | Name  | Type | Value |
