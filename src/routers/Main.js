@@ -7,7 +7,7 @@ const { tagParamValidation } = require('../valids.js');
 
 router.get("/", (_, res) => {
     res.status(200).json({
-        message: "The artndev's QUOTES-REST-API service. It's very simple and very useful!"
+        message: "The QUTS-API service. It's very simple and very useful!"
     });
 });
 router.get("/random", setLocale, getRandomQuote);

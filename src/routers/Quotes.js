@@ -1,4 +1,3 @@
-//const timeout = require('connect-timeout');
 const express = require('express');
 const router = express.Router();
 const { saveQuoteValidation, idParamValidation } = require("../valids.js");
